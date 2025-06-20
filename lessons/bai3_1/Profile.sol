@@ -9,7 +9,7 @@ contract Profile {
     uint256 public age;
 
     // Hàm setProfile(string _name, uint _age) cập nhật name và age
-    function setProfile(string memory _name, uint256 _age) public {
+    function setProfile(string calldata _name, uint256 _age) external {
         name = _name;
         age = _age;
     }
