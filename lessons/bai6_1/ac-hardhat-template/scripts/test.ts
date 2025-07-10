@@ -1,16 +1,20 @@
 import { ethers } from "hardhat";
-import { Counter } from "../typechain";
+import { MyToken } from "../typechain";
 
 async function main() {
   const [deployer] = await ethers.getSigners();
   console.log("Deploying contracts with the account: ", deployer.address);
 
-  const counter: Counter = await ethers.getContract("Counter");
-  const tx = await counter.increment();
-  await tx.wait();
+  const myToken: MyToken = await ethers.getContract("MyToken");
 
-  const count = await counter.getCount();
-  console.log("Current count is:", count.toString());
+  const balance = await myToken.balanceOf(deployer.address);
+  const totalSupply = await myToken.totalSupply();
+
+  if (balance === totalSupply) {
+    console.log("✅ Deployer holds entire supply.");
+  } else {
+    console.error("❌ Balance mismatch!");
+  }
 }
 
 main().catch((error) => {
