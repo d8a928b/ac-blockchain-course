@@ -11,7 +11,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   console.log("====================");
 
   console.log("====================");
-  console.log("Deploy Counter Contract");
+  console.log("Deploy MyToken Contract");
   console.log("====================");
 
   await deploy("MyToken", {

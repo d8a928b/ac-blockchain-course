@@ -6,17 +6,12 @@ import { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
 import { MyToken } from "../typechain";
 
 describe("MyToken", function () {
-  let deployer: SignerWithAddress,
-    admin: SignerWithAddress,
-    addr1: SignerWithAddress,
-    addr2: SignerWithAddress;
-
+  let deployer: SignerWithAddress, admin: SignerWithAddress, addr1: SignerWithAddress, addr2: SignerWithAddress;
   let myToken: MyToken;
 
   const deploy = async () => {
     [deployer, admin, addr1, addr2] = await ethers.getSigners();
 
-    // Deploy MyToken contract
     const MyTokenFactory = await ethers.getContractFactory("MyToken");
     myToken = await MyTokenFactory.deploy();
   };
@@ -53,9 +48,7 @@ describe("MyToken", function () {
     it("Should fail if sender doesn't have enough balance", async function () {
       const bigAmount = ethers.parseUnits("1000000000", 18);
 
-      await expect(
-        myToken.connect(addr2).transfer(deployer.address, bigAmount)
-      ).to.be.reverted;
+      await expect(myToken.connect(addr2).transfer(deployer.address, bigAmount)).to.be.reverted;
     });
   });
 });
