@@ -3,9 +3,10 @@ import { DeployFunction } from "hardhat-deploy/types";
 
 // Viết script deploy
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts, ethers } = hre;
+  const { deployments, ethers } = hre;
   const { deploy } = deployments;
-  const { deployer } = await getNamedAccounts();
+  const [deployerSigner] = await ethers.getSigners();
+  const deployer = await deployerSigner.getAddress();
 
   console.log("====================");
   console.log(hre.network.name);
@@ -24,7 +25,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   });
 
   // Mint 1000 token cho deployer
-  const token = await ethers.getContractAt("MyMintableToken", deployment.address);
+  const token = await ethers.getContractAt("MyMintableToken", deployment.address, deployerSigner);
   const mintAmount = ethers.parseUnits("1000", 18);
   await token.mint(deployer, mintAmount);
   console.log(`✅ Minted 1000 MMT to ${deployer}`);
