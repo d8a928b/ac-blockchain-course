@@ -25,6 +25,7 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 const {
   TESTNET_PRIVATE_KEY: testnetPrivateKey,
   MAINNET_PRIVATE_KEY: mainnetPrivateKey,
+  YOUR_PRIVATE_KEY: yourPrivateKey,
 } = process.env;
 const reportGas = process.env.REPORT_GAS;
 
@@ -47,7 +48,13 @@ module.exports = {
       chainId: 1,
       accounts: [mainnetPrivateKey],
       timeout: 60000,
-    }
+    },
+    "bnb": {
+      url: "https://bsc.drpc.org",
+      accounts: [yourPrivateKey],
+      chainId: 56,
+      timeout: 40000,
+    },
   },
   solidity: {
     compilers: [
